@@ -1,0 +1,20 @@
+s1 0   ACATGCTACACGTATCCGATACCCCGTAACCGATAACGATACACAGACCTCGTACGCTTG
+       |||||| ||||   ||||||||||||||||||||||||||||| ||||||||||||||||
+s2 0   ACATGCGACACTACTCCGATACCCCGTAACCGATAACGATACAGAGACCTCGTACGCTTG
+
+s1 60  CTACAACGTACTCTATAACCGAGAACGATTGACATGCCTCGTACACATGCTACACGTACT
+             | ||    ||||||||||||||||||||| ||||||  ||| ||||||||||||
+s2 60  ------C-TA----ATAACCGAGAACGATTGACATTCCTCGT--ACA-GCTACACGTACT
+
+s1 120 CCGAT
+       |||||
+s2 120 CCGAT
+
+Scoring Parameters... match: 1, mismatch: -2, gap: -2, opening gap: -5
+
+Global optimal score: 55
+
+Number of... matches: 105, mismatches: 6, gaps: 14
+
+84% identical (105/125)
+
