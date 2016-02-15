@@ -11,7 +11,13 @@ DPTable::DPTable(const string & inputFile, const string & paramsFile)
 	numMismatches(0), numOpenGaps(0), numGaps(0)
 {
 	readFastaFile(inputFile);
-	readParamsFile(paramsFile);
+	try {
+		readParamsFile(paramsFile);
+	}
+	catch (const char* m) {
+		cerr << m << endl;
+		scoreParams.setToDefault();
+	}
 
 	table.resize(s1.length() + 1);
 	for (int i = 0; i < table.size(); i++)
@@ -82,27 +88,23 @@ void DPTable::readParamsFile(const string & fileName)
 		while (getline(file, line))
 		{
 			int pos = line.find_first_of(' ');
+			// if no space char found
 			if (pos == string::npos)
 			{
-				cout << "Error: invalid scoring parameter file format! Refer to example file parameters.config." << endl << endl;
-				scoreParams = { 1, -1, -2, -1 };
-				break;
+				throw "Error: invalid scoring parameter file format! Refer to example file parameters.config.";
 			}
 
 			// pass in first half of line (param name, e.g. "match") followed by it's score, converted to int
+			// if substr fails to map to scoring param, throws exception
 			if (!scoreParams.setParamsFromInput(line.substr(0, pos), std::stoi(line.substr(pos + 1, line.length()))))
 			{
-				cout << "Error: invalid scoring parameter file format! Refer to example file parameters.config." << endl << endl;
-				scoreParams = { 1, -1, -2, -1 };
-				break;
+				throw "Error: invalid scoring parameter file format! Refer to example file parameters.config.";
 			}
 		}
 	}
 	else
 	{
-		cout << "Error: unable to open params file - scoring parameters set to defaults { 1, -1, -2, -1 }" << endl << endl;
-		scoreParams = { 1, -1, -2, -1 };
-		// set to default values
+		throw "Error: unable to open params file - scoring parameters set to defaults { 1, -1, -2, -1 }";
 	}
 }
 
@@ -153,9 +155,9 @@ void DPTable::populateTable()
 		{
 			// get max and if match, add match point, else mismatch penalty
 			table[i][j].setSub(table[i - 1][j - 1].getMaxScore()
-				+ ( (s1[i-1] == s2[j-1]) ? scoreParams.match : scoreParams.mismatch ));
-			table[i][j].setDel(table[i - 1][j].getMaxScore(DEL, scoreParams.gap, scoreParams.openGap));
-			table[i][j].setIns(table[i][j - 1].getMaxScore(INS, scoreParams.gap, scoreParams.openGap));
+				+ ( (s1[i-1] == s2[j-1]) ? scoreParams.getMatch() : scoreParams.getMismatch() ));
+			table[i][j].setDel(table[i - 1][j].getMaxScore(DEL, scoreParams.getGap(), scoreParams.getOpenGap()));
+			table[i][j].setIns(table[i][j - 1].getMaxScore(INS, scoreParams.getGap(), scoreParams.getOpenGap()));
 		}
 	}
 }
@@ -251,8 +253,8 @@ void DPTable::printOutput() const
 		}
 
 
-		outfile << "Scoring Parameters... match: " << scoreParams.match << ", mismatch: " << scoreParams.mismatch
-			<< ", gap: " << scoreParams.gap << ", opening gap: " << scoreParams.openGap << endl << endl;
+		outfile << "Scoring Parameters... match: " << scoreParams.getMatch() << ", mismatch: " << scoreParams.getMismatch()
+			<< ", gap: " << scoreParams.getGap() << ", opening gap: " << scoreParams.getOpenGap() << endl << endl;
 		outfile << "Global optimal score: " << table[table.size() - 1][table[0].size() - 1].getMaxScore() << endl << endl;
 		outfile << "Number of... matches: " << numMatches << ", mismatches: " << numMismatches << ", gaps: " << numGaps
 			<< endl << endl;

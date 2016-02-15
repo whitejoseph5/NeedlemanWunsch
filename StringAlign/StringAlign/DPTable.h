@@ -33,7 +33,7 @@ public:
 	// O(m + n)
 	void printOutput() const;
 
-	// accessor version of operator[] 
+	// accessor version of operator[]
 	const vector<DPCell> & operator[](int row) const;
 
 private:

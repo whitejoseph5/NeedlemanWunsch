@@ -10,9 +10,9 @@ s1 120 CCGAT
        |||||
 s2 120 CCGAT
 
-Scoring Parameters... match: 1, mismatch: -2, gap: -2, opening gap: -5
+Scoring Parameters... match: 1, mismatch: -1, gap: -1, opening gap: -2
 
-Global optimal score: 55
+Global optimal score: 81
 
 Number of... matches: 105, mismatches: 6, gaps: 14
 

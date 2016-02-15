@@ -5,7 +5,7 @@
 	with affine gap penalty.
 
 	Command line arguments should be passed in the following format:
-	./StringAlign [inputfile.fasta] [0(global) or 1(local)] [parameters.config]
+	./StringAlign [inputfile.fasta] [parameters.config]
 
 	"defaultInput.fasta" and "parameters.config" must be in working directory if no arguments are supplied.
 
@@ -25,10 +25,9 @@ int main(int argc, char *argv[])
 		case 1:
 			break;
 		case 2:
-		case 3:
 			inputFileName.assign(argv[1]);
 			break;
-		case 4:
+		case 3:
 			inputFileName.assign(argv[1]);
 			paramsFileName.assign(argv[3]);
 			break;
