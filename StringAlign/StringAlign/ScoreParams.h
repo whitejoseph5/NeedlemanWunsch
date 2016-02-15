@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SCOREPARAMS_H
+#define SCOREPARAMS_H
 
 #include <string>
 using std::string;
@@ -26,3 +27,5 @@ private:
 	int openGap;
 	int gap;
 };
+
+#endif

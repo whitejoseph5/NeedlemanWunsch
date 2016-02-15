@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DPTABLE_H
+#define DPTABLE_H
 
 #include "DPCell.h"
 #include "ScoreParams.h"
@@ -63,3 +64,5 @@ private:
 	int numOpenGaps;
 	int numGaps;
 };
+
+#endif

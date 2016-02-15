@@ -1,4 +1,5 @@
-#pragma once
+#ifndef DPCELL_H
+#define DPCELL_H
 
 #include <iostream>
 #include <vector>
@@ -43,3 +44,5 @@ private:
 	int delScore;
 	int insScore;
 };
+
+#endif
